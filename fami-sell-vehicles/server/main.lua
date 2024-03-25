@@ -92,8 +92,6 @@ RegisterNetEvent('fami-sell-vehicles:buyVehicle')
 AddEventHandler('fami-sell-vehicles:buyVehicle', function (index)
     local xPlayer = ESX.GetPlayerFromId(source)
 
-    print(index)
-
     if index ~= '0' then
         index = tonumber(index)
     else
