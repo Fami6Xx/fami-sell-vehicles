@@ -1,5 +1,5 @@
 {
-    "blip_name": "Prodej dovozovych aut",
+    "blip_name": "Prodej dovozových aut",
     "vehicle_sold": "Bylo prodáno tvé vozidlo za %s$",
     "sell_vehicle_prompt": "Zmáčkni [E] pro otevření menu pro prodej auta",
     "sell_vehicle_price_prompt_title": "Prodej auta",
