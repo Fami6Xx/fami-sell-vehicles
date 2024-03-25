@@ -21,6 +21,7 @@
     "choose_vehicle_item_description": "Price: ~g~%s~s~$",
     "choose_vehicle_title": "Choose a vehicle",
     "not_enough_money": "You don't have enough money",
+    "not_your_vehicle": "This is not your vehicle",
     "vehicle_returned": "Vehicle returned to garage",
     "vehicle_return_error": "An error occured while returning the vehicle",
     "vehicle_bought": "Vehicle bought for ~g~%s~s~$"

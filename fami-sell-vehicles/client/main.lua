@@ -260,6 +260,23 @@ AddEventHandler('fami-sell-vehicles:viewVehicle', function(data)
     SpawnVehicle(showingVehicleId)
 end)
 
+RegisterNetEvent('fami-sell-vehicles:removedVehicle')
+AddEventHandler('fami-sell-vehicles:removedVehicle', function(data)
+    if showingVehicleId == data then
+        if showingVehicle ~= 0 then
+            if DoesEntityExist(showingVehicle) then
+                DeleteEntity(showingVehicle)
+            end
+            showingVehicle = 0
+            showingVehicleId = 0
+        end
+    end
+
+    if lib.getOpenContextMenu() == "fami-sell-vehicles:vehicleOptions" or lib.getOpenContextMenu() == "fami-sell-vehicles:allVehicles" then
+        lib.hideContext(false)
+    end
+end)
+
 function openAllVehiclesMenu()
     local elements = {}
     local vehicles = lib.callback.await('fami-sell-vehicles:getVehiclesForSale', false)

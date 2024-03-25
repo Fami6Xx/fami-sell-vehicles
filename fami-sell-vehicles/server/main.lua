@@ -80,6 +80,72 @@ lib.callback.register('fami-sell-vehicles:getVehiclesForSale', function (source)
     return result
 end)
 
+RegisterNetEvent('fami-sell-vehicles:buyVehicle')
+AddEventHandler('fami-sell-vehicles:buyVehicle', function (index)
+    local xPlayer = ESX.GetPlayerFromId(source)
+    local result = MySQL.query.await('SELECT vehicleProps, seller, price FROM vehicles_for_sale LIMIT 1 OFFSET @index', {
+        ['@index'] = index
+    })
+
+    if result[1] then
+        local vehicleProps = json.decode(result[1].vehicleProps)
+        local seller = result[1].seller
+        local price = result[1].price
+
+        if xPlayer.getMoney() >= price then
+            xPlayer.removeMoney(price)
+            UpdateCash(seller, price - (price * (Config.SellCarTax or 0.1)))
+
+            TriggerClientEvent('fami-sell-vehicles:removedVehicle', -1, index)
+
+            MySQL.insert.await('INSERT INTO owned_vehicles (owner, plate, vehicle) VALUES (@owner, @plate, @vehicle)', {
+                ['@owner'] = xPlayer.getIdentifier(),
+                ['@plate'] = vehicleProps.plate,
+                ['@vehicle'] = json.encode(vehicleProps)
+            })
+
+            MySQL.update.await('DELETE FROM vehicles_for_sale LIMIT 1 OFFSET @index', {
+                ['@index'] = index
+            })
+
+            xPlayer.showNotification(locale('vehicle_bought', price))
+        else
+            xPlayer.showNotification(locale('not_enough_money'))
+        end
+    end
+end)
+
+RegisterNetEvent('fami-sell-vehicles:returnVehicle')
+AddEventHandler('fami-sell-vehicles:returnVehicle', function (index)
+    local xPlayer = ESX.GetPlayerFromId(source)
+    local result = MySQL.query.await('SELECT vehicleProps, seller, price FROM vehicles_for_sale LIMIT 1 OFFSET @index', {
+        ['@index'] = index
+    })
+
+    if result[1] then
+        local vehicleProps = json.decode(result[1].vehicleProps)
+        local seller = result[1].seller
+        if seller ~= xPlayer.getIdentifier() then
+            xPlayer.showNotification(locale('not_your_vehicle'))
+            return
+        end
+
+        TriggerClientEvent('fami-sell-vehicles:removedVehicle', -1, index)
+
+        MySQL.insert.await('INSERT INTO owned_vehicles (owner, plate, vehicle) VALUES (@owner, @plate, @vehicle)', {
+            ['@owner'] = seller,
+            ['@plate'] = vehicleProps.plate,
+            ['@vehicle'] = json.encode(vehicleProps)
+        })
+
+        MySQL.update.await('DELETE FROM vehicles_for_sale LIMIT 1 OFFSET @index', {
+            ['@index'] = index
+        })
+
+        xPlayer.showNotification(locale('vehicle_returned'))
+    end
+end)
+
 
 function UpdateCash(identifier, cash)
 	local xPlayer = ESX.GetPlayerFromIdentifier(identifier)
