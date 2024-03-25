@@ -96,7 +96,7 @@ AddEventHandler('fami-sell-vehicles:buyVehicle', function (index)
         error("Invalid index")
     end
 
-    local result = MySQL.query.await('SELECT vehicleProps, seller, price FROM vehicles_for_sale LIMIT 1 OFFSET @index', {
+    local result = MySQL.query.await('SELECT id, vehicleProps, seller, price FROM vehicles_for_sale LIMIT 1 OFFSET @index', {
         ['@index'] = index
     })
 
@@ -109,17 +109,17 @@ AddEventHandler('fami-sell-vehicles:buyVehicle', function (index)
             xPlayer.removeMoney(price)
             UpdateCash(seller, price - (price * (Config.SellCarTax or 0.1)))
 
-            TriggerClientEvent('fami-sell-vehicles:removedVehicle', -1, index)
-
             MySQL.insert.await('INSERT INTO owned_vehicles (owner, plate, vehicle) VALUES (@owner, @plate, @vehicle)', {
                 ['@owner'] = xPlayer.getIdentifier(),
                 ['@plate'] = vehicleProps.plate,
                 ['@vehicle'] = json.encode(vehicleProps)
             })
 
-            MySQL.update.await('DELETE FROM vehicles_for_sale LIMIT 1 OFFSET @index', {
-                ['@index'] = index
+            MySQL.update.await('DELETE FROM vehicles_for_sale WHERE id = @id', {
+                ['@id'] = result[1].id
             })
+
+            TriggerClientEvent('fami-sell-vehicles:removedVehicle', -1, index)
 
             xPlayer.showNotification(locale('vehicle_bought', price))
         else
@@ -142,7 +142,7 @@ AddEventHandler('fami-sell-vehicles:returnVehicle', function (index)
         error("Invalid index")
     end
 
-    local result = MySQL.query.await('SELECT vehicleProps, seller, price FROM vehicles_for_sale LIMIT 1 OFFSET @index', {
+    local result = MySQL.query.await('SELECT id, vehicleProps, seller, price FROM vehicles_for_sale LIMIT 1 OFFSET @index', {
         ['@index'] = index
     })
 
@@ -154,17 +154,17 @@ AddEventHandler('fami-sell-vehicles:returnVehicle', function (index)
             return
         end
 
-        TriggerClientEvent('fami-sell-vehicles:removedVehicle', -1, index)
-
         MySQL.insert.await('INSERT INTO owned_vehicles (owner, plate, vehicle) VALUES (@owner, @plate, @vehicle)', {
             ['@owner'] = seller,
             ['@plate'] = vehicleProps.plate,
             ['@vehicle'] = json.encode(vehicleProps)
         })
 
-        MySQL.update.await('DELETE FROM vehicles_for_sale LIMIT 1 OFFSET @index', {
-            ['@index'] = index
+        MySQL.update.await('DELETE FROM vehicles_for_sale WHERE id = @id', {
+            ['@id'] = result[1].id
         })
+
+        TriggerClientEvent('fami-sell-vehicles:removedVehicle', -1, index)
 
         xPlayer.showNotification(locale('vehicle_returned'))
     end

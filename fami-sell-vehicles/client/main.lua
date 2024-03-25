@@ -205,7 +205,7 @@ function SpawnVehicle(id)
         local min, max = GetModelDimensions(GetEntityModel(veh))
         local height = max.z - min.z
         local location = GetEntityCoords(veh)
-        sellingCarTextPosition = vector3(location.x, location.y, location.z + height + 0.3)
+        sellingCarTextPosition = vector3(location.x, location.y, location.z + height)
         loadingCar = false
     end)
 end
@@ -264,6 +264,7 @@ AddEventHandler('fami-sell-vehicles:removedVehicle', function(data)
         if showingVehicle ~= 0 then
             if DoesEntityExist(showingVehicle) then
                 DeleteEntity(showingVehicle)
+                SpawnVehicle(0)
             end
             showingVehicle = 0
             showingVehicleId = 0
