@@ -12,7 +12,7 @@
     "loading_vehicle": "Vozidlo se nacita, pockejte prosím...",
     "vehicle_for_sale": "Vozidlo je na prodej za ~g~%s~s~$",
     "no_vehicle_for_sale": "Zadne vozidlo není v prodeji",
-    "view_vehicle_prompt": "Zmáčkni [E] pro možnosti vozidel",
+    "view_vehicle_prompt": "Zmáčkni [E] pro možnosti vozidla",
     "vehicle_options_title": "Možnosti vozidla",
     "vehicle_options_buy": "Koupit vozidlo za %s$",
     "vehicle_options_return": "Vrátit auto do garže",
