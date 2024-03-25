@@ -1,0 +1,28 @@
+{
+    "blip_name": "Prodej dovozovych aut",
+    "vehicle_sold": "Bylo prodáno tvé auto za %s$",
+    "sell_vehicle_prompt": "Zmá?kni [E] pro otev?ení menu pro prodej auta",
+    "sell_vehicle_price_prompt_title": "Prodej auta",
+    "sell_vehicle_price_prompt_text": "Cena, za kterou chceš prodat auto",
+    "sell_vehicle_price_invalid": "Neplatná cena",
+    "sell_vehicle_prompt_notinvehicle": "Musíš být ve vozidle, které chceš prodat",
+    "sell_vehicle_not_owned": "Toto vozidlo nevlastníš",
+    "sell_vehicle_success": "Vozidlo bylo dáno na prodej za ~g~%s~s~$",
+    "sell_vehicle_error": "N?co se pokazilo, zkuste to znovu",
+    "loading_vehicle": "Vozidlo se na?ítá, po?kejte prosím...",
+    "vehicle_for_sale": "Vozidlo je na prodej za ~g~%s~s~$",
+    "no_vehicle_for_sale": "Žádné vozidlo není v prodeji",
+    "view_vehicle_prompt": "Zmá?kni [E] pro editaci vozidla",
+    "vehicle_options_title": "Možnosti vozidla",
+    "vehicle_options_buy": "Koupit vozidlo za ~g~%s~s~$",
+    "vehicle_options_return": "Vrátit auto do garáže",
+    "vehicle_options_change_vehicle": "Zm?nit zobrazené vozidlo",
+    "choose_vehicle_item_title": "Vozidlo: ~r~%s",
+    "choose_vehicle_item_description": "Cena: ~g~%s~s~$",
+    "choose_vehicle_title": "Vyber vozidlo",
+    "not_enough_money": "Nemáš dostatek pen?z",
+    "vehicle_returned": "Vozidlo bylo vráceno do garáže",
+    "vehicle_return_error": "N?co se pokazilo, zkuste to znovu",
+    "vehicle_bought": "Vozidlo bylo zakoupeno za ~g~%s~s~$"
+    
+}
