@@ -19,19 +19,22 @@ lib.callback.register('fami-sell-vehicles:checkCar', function (source, vehicle, 
     end
 end)
 
-lib.callback.register('fami-sell-vehicles:putOnSale', function(source, money, vehicle, vehicleProps)
+lib.callback.register('fami-sell-vehicles:putOnSale', function(source, money, vehicleProps)
     local xPlayer = ESX.GetPlayerFromId(source)
     local plate = vehicleProps.plate
-    local pedVehicle = GetVehiclePedIsIn(GetPlayerPed(source), false)
-    print(pedVehicle, vehicle)
-    if pedVehicle == 0 then return false end
-    print("1")
-    if pedVehicle ~= vehicle then return false end
-    print("2")
-    if not DoesEntityExist(vehicle) then return false end
-    print("3")
-    if not vehicleProps then return false end
-    print("4")
+
+    local response = MySQL.query.await('SELECT owner FROM owned_vehicles WHERE owner = @owner AND plate = @plate LIMIT 1', {
+        ['@owner'] = xPlayer.getIdentifier(),
+        ['@plate'] = plate
+    })
+
+    if not response then
+        return false
+    end
+
+    if #response == 0 then
+        return false
+    end
 
     MySQL.insert.await('INSERT INTO vehicles_for_sale (seller, vehicleProps, price) VALUES (@seller, @vehicleProps, @price)', {
         ['@seller'] = xPlayer.getIdentifier(),

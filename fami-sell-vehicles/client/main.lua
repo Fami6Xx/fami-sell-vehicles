@@ -81,7 +81,7 @@ Citizen.CreateThread(function()
                     return
                 end
                 
-                local success = lib.callback.await('fami-sell-vehicles:putOnSale', false, money[1], vehicle, vehicleProperties)
+                local success = lib.callback.await('fami-sell-vehicles:putOnSale', false, money[1], vehicleProperties)
                 if success then
                     ESX.ShowNotification(locale('sell_vehicle_success', money[1]))
                     ESX.Game.DeleteVehicle(vehicle)
