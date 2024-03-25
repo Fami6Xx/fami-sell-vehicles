@@ -109,7 +109,7 @@ AddEventHandler('fami-sell-vehicles:buyVehicle', function (index)
             xPlayer.removeMoney(price)
             UpdateCash(seller, price - (price * (Config.SellCarTax or 0.1)))
 
-            MySQL.insert.await('INSERT INTO owned_vehicles (owner, plate, vehicle) VALUES (@owner, @plate, @vehicle)', {
+            MySQL.insert.await('INSERT INTO owned_vehicles (owner, plate, vehicle, `stored`, type) VALUES (@owner, @plate, @vehicle, 1, "car")', {
                 ['@owner'] = xPlayer.getIdentifier(),
                 ['@plate'] = vehicleProps.plate,
                 ['@vehicle'] = json.encode(vehicleProps)
@@ -154,7 +154,7 @@ AddEventHandler('fami-sell-vehicles:returnVehicle', function (index)
             return
         end
 
-        MySQL.insert.await('INSERT INTO owned_vehicles (owner, plate, vehicle) VALUES (@owner, @plate, @vehicle)', {
+        MySQL.insert.await('INSERT INTO owned_vehicles (owner, plate, vehicle, `stored`, type) VALUES (@owner, @plate, @vehicle, 1, "car")', {
             ['@owner'] = seller,
             ['@plate'] = vehicleProps.plate,
             ['@vehicle'] = json.encode(vehicleProps)
