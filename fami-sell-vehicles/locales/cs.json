@@ -20,7 +20,7 @@
     "choose_vehicle_item_title": "Vozidlo: %s",
     "choose_vehicle_item_description": "Cena: %s$",
     "choose_vehicle_title": "Vyber vozidlo",
-    "not_enough_money": "Nemáš dostatek peněz",
+    "not_enough_money": "Nemáš dostatek peněz u sebe",
     "not_your_vehicle": "Toto vozidlo není tvé",
     "vehicle_returned": "Vozidlo bylo vráceno do garže",
     "vehicle_return_error": "Něco se pokazilo, zkuste to znovu",

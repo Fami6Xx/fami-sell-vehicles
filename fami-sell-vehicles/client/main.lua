@@ -143,8 +143,8 @@ Citizen.CreateThread(function ()
                     title = locale('vehicle_options_title'),
                     canClose = true,
                     options = {
-                        {title = locale('vehicle_options_buy', showingVehiclePrice), icon = "dollar", serverEvent = "fami-sell-vehicles:buyVehicle", args = showVehicleId},
-                        {title = locale('vehicle_options_return'), icon = "car", serverEvent = "fami-sell-vehicles:returnVehicle", args = showVehicleId, disabled = showingVehicleOwner ~= ESX.PlayerData.identifier},
+                        {title = locale('vehicle_options_buy', showingVehiclePrice), icon = "dollar", serverEvent = "fami-sell-vehicles:buyVehicle", args = showingVehicleId},
+                        {title = locale('vehicle_options_return'), icon = "car", serverEvent = "fami-sell-vehicles:returnVehicle", args = showingVehicleId, disabled = showingVehicleOwner ~= ESX.PlayerData.identifier},
                         {title = locale('vehicle_options_change_vehicle'), icon = "car-side", onSelect = openAllVehiclesMenu},
                     }
                 })

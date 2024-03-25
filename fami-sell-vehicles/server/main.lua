@@ -83,6 +83,19 @@ end)
 RegisterNetEvent('fami-sell-vehicles:buyVehicle')
 AddEventHandler('fami-sell-vehicles:buyVehicle', function (index)
     local xPlayer = ESX.GetPlayerFromId(source)
+
+    print(index)
+
+    if index ~= '0' then
+        index = tonumber(index)
+    else
+        index = 0
+    end
+
+    if index == nil then
+        error("Invalid index")
+    end
+
     local result = MySQL.query.await('SELECT vehicleProps, seller, price FROM vehicles_for_sale LIMIT 1 OFFSET @index', {
         ['@index'] = index
     })
@@ -118,6 +131,17 @@ end)
 RegisterNetEvent('fami-sell-vehicles:returnVehicle')
 AddEventHandler('fami-sell-vehicles:returnVehicle', function (index)
     local xPlayer = ESX.GetPlayerFromId(source)
+
+    if index ~= '0' then
+        index = tonumber(index)
+    else
+        index = 0
+    end
+
+    if index == nil then
+        error("Invalid index")
+    end
+
     local result = MySQL.query.await('SELECT vehicleProps, seller, price FROM vehicles_for_sale LIMIT 1 OFFSET @index', {
         ['@index'] = index
     })
