@@ -272,7 +272,7 @@ function openAllVehiclesMenu()
         local model = json.decode(vehicles[i].vehicleProps).model
         table.insert(elements, {
             title = locale('choose_vehicle_item_title', GetVehicleLabel(model)),
-            description = locale('choose_vehicle_item_description', vehicles[i].price),
+            description = locale('choose_vehicle_item_description', formatMoney(vehicles[i].price)),
             icon = "car",
             event = "fami-sell-vehicles:viewVehicle",
             args = vehicles[i].id,
