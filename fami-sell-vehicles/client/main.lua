@@ -53,6 +53,18 @@ Citizen.CreateThread(function()
             end
 
             if IsControlJustPressed(0, 51) then
+                local ped = PlayerPedId()
+                local vehicle = GetVehiclePedIsIn(ped, false)
+                if vehicle == 0 then
+                    ESX.ShowNotification(locale('sell_vehicle_prompt_notinvehicle'), "error")
+                    return
+                end
+
+                if GetPedInVehicleSeat(vehicle, -1) ~= ped then
+                    ESX.ShowNotification(locale('sell_vehicle_prompt_notinvehicle'), "error")
+                    return
+                end
+
                 lib.hideTextUI()
                 local ownsVehicle = lib.callback.await('fami-sell-vehicles:checkCar', false)
                 if not ownsVehicle then
