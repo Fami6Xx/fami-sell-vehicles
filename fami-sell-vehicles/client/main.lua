@@ -247,8 +247,6 @@ AddEventHandler('fami-sell-vehicles:viewVehicle', function(data)
         showingVehicle = 0
     end
 
-    print(data)
-
     local PlayerPed = ESX.PlayerData.ped
     local PlayerCoords = GetEntityCoords(PlayerPed)
     local distance = #(PlayerCoords - vector3(Config.ViewVehicles.position.x, Config.ViewVehicles.position.y, Config.ViewVehicles.position.z))
