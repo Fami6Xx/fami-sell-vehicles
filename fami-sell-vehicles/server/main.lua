@@ -1,32 +1,37 @@
 lib.locale()
 
-lib.callback.register('fami-sell-vehicles:checkCar', function (source)
+lib.callback.register('fami-sell-vehicles:checkCar', function (source, vehicle, vehiclePlate)
     local xPlayer = ESX.GetPlayerFromId(source)
-    local vehicle = GetVehiclePedIsIn(GetPlayerPed(source), false)
-    if vehicle == 0 then return false end
-    if not DoesEntityExist(vehicle) then return false end
-    local plate = GetVehicleNumberPlateText(vehicle)
 
-    MySQL.Async.fetchAll('SELECT * FROM owned_vehicles WHERE owner = @owner AND plate = @plate LIMIT 1', {
+    local response = MySQL.query.await('SELECT owner FROM owned_vehicles WHERE owner = @owner AND plate = @plate LIMIT 1', {
         ['@owner'] = xPlayer.getIdentifier(),
-        ['@plate'] = plate
-    }, function (result)
-        if result[1] then
+        ['@plate'] = vehiclePlate
+    })
+
+    if response then
+        if #response > 0 then
             return true
         else
             return false
         end
-    end)
+    else
+        return false
+    end
 end)
 
 lib.callback.register('fami-sell-vehicles:putOnSale', function(source, money, vehicle, vehicleProps)
     local xPlayer = ESX.GetPlayerFromId(source)
     local plate = vehicleProps.plate
-    local vehicle = GetVehiclePedIsIn(GetPlayerPed(source), false)
-    if vehicle == 0 then return false end
+    local pedVehicle = GetVehiclePedIsIn(GetPlayerPed(source), false)
+    print(pedVehicle, vehicle)
+    if pedVehicle == 0 then return false end
+    print("1")
+    if pedVehicle ~= vehicle then return false end
+    print("2")
     if not DoesEntityExist(vehicle) then return false end
-    local vehPlate = GetVehicleNumberPlateText(vehicle)
-    if vehPlate ~= plate then return false end
+    print("3")
+    if not vehicleProps then return false end
+    print("4")
 
     MySQL.insert.await('INSERT INTO vehicles_for_sale (seller, vehicleProps, price) VALUES (@seller, @vehicleProps, @price)', {
         ['@seller'] = xPlayer.getIdentifier(),
